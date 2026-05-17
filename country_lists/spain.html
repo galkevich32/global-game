@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Spain - NBA International Players</title>
+        
+<style>
+    body { font-family: Arial, sans-serif; margin: 40px; color: #333; line-height: 1.6; }
+    h1 { color: #1f77b4; border-bottom: 2px solid #1f77b4; padding-bottom: 10px; }
+    h2 { color: #444; margin-top: 30px; background: #f4f4f4; padding: 8px; border-left: 5px solid #1f77b4; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; font-size: 14px; }
+    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #ddd; }
+    th { background-color: #1f77b4; color: white; }
+    tr:hover { background-color: #f5f5f5; }
+    .unique-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 30px; }
+    .player-card { background: #e3f2fd; padding: 10px; border-radius: 4px; font-weight: bold; text-align: center; border: 1px solid #bbdefb; }
+</style>
+
+    </head>
+    <body>
+        <h1>Spain NBA Alumni Dashboard</h1>
+
+        <h2>1) All-Time Unique Players (16 Total)</h2>
+        <div class='unique-box'>
+            <div class='player-card'>Alex Abrines</div><div class='player-card'>Hugo González</div><div class='player-card'>Jorge Garbajosa</div><div class='player-card'>Jose Calderon</div><div class='player-card'>Juan Carlos Navarro</div><div class='player-card'>Juancho Hernangomez</div><div class='player-card'>Marc Gasol</div><div class='player-card'>Pau Gasol</div><div class='player-card'>Raul Lopez</div><div class='player-card'>Ricky Rubio</div><div class='player-card'>Rudy Fernandez</div><div class='player-card'>Santi Aldama</div><div class='player-card'>Sergio Rodriguez</div><div class='player-card'>Usman Garuba</div><div class='player-card'>Victor Claver</div><div class='player-card'>Willy Hernangomez</div>
+        </div>
+
+        <h2>2) Historical Season-by-Season Log (100 Total Appearances)</h2>
+        <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Season</th>
+      <th>Player</th>
+      <th>Team</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025-26</td>
+      <td>Hugo González</td>
+      <td>BOS</td>
+    </tr>
+    <tr>
+      <td>2025-26</td>
+      <td>Santi Aldama</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2024-25</td>
+      <td>Santi Aldama</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2023-24</td>
+      <td>Usman Garuba</td>
+      <td>GSW</td>
+    </tr>
+    <tr>
+      <td>2023-24</td>
+      <td>Santi Aldama</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2022-23</td>
+      <td>Juancho Hernangomez</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2022-23</td>
+      <td>Ricky Rubio</td>
+      <td>CLE</td>
+    </tr>
+    <tr>
+      <td>2022-23</td>
+      <td>Santi Aldama</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2022-23</td>
+      <td>Usman Garuba</td>
+      <td>HOU</td>
+    </tr>
+    <tr>
+      <td>2022-23</td>
+      <td>Willy Hernangomez</td>
+      <td>NOP</td>
+    </tr>
+    <tr>
+      <td>2021-22</td>
+      <td>Santi Aldama</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2021-22</td>
+      <td>Usman Garuba</td>
+      <td>HOU</td>
+    </tr>
+    <tr>
+      <td>2021-22</td>
+      <td>Willy Hernangomez</td>
+      <td>NOP</td>
+    </tr>
+    <tr>
+      <td>2021-22</td>
+      <td>Ricky Rubio</td>
+      <td>IND</td>
+    </tr>
+    <tr>
+      <td>2021-22</td>
+      <td>Juancho Hernangomez</td>
+      <td>UTA</td>
+    </tr>
+    <tr>
+      <td>2020-21</td>
+      <td>Juancho Hernangomez</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2020-21</td>
+      <td>Marc Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2020-21</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2020-21</td>
+      <td>Willy Hernangomez</td>
+      <td>NOP</td>
+    </tr>
+    <tr>
+      <td>2019-20</td>
+      <td>Juancho Hernangomez</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2019-20</td>
+      <td>Marc Gasol</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2019-20</td>
+      <td>Ricky Rubio</td>
+      <td>PHX</td>
+    </tr>
+    <tr>
+      <td>2019-20</td>
+      <td>Willy Hernangomez</td>
+      <td>CHA</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Willy Hernangomez</td>
+      <td>CHA</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Ricky Rubio</td>
+      <td>UTA</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Pau Gasol</td>
+      <td>MIL</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Marc Gasol</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Juancho Hernangomez</td>
+      <td>DEN</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Alex Abrines</td>
+      <td>OKC</td>
+    </tr>
+    <tr>
+      <td>2018-19</td>
+      <td>Jose Calderon</td>
+      <td>DET</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Alex Abrines</td>
+      <td>OKC</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Jose Calderon</td>
+      <td>CLE</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Juancho Hernangomez</td>
+      <td>DEN</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Pau Gasol</td>
+      <td>SAS</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Ricky Rubio</td>
+      <td>UTA</td>
+    </tr>
+    <tr>
+      <td>2017-18</td>
+      <td>Willy Hernangomez</td>
+      <td>CHA</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Pau Gasol</td>
+      <td>SAS</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Willy Hernangomez</td>
+      <td>NYK</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Sergio Rodriguez</td>
+      <td>PHI</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Juancho Hernangomez</td>
+      <td>DEN</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Jose Calderon</td>
+      <td>ATL</td>
+    </tr>
+    <tr>
+      <td>2016-17</td>
+      <td>Alex Abrines</td>
+      <td>OKC</td>
+    </tr>
+    <tr>
+      <td>2015-16</td>
+      <td>Jose Calderon</td>
+      <td>NYK</td>
+    </tr>
+    <tr>
+      <td>2015-16</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2015-16</td>
+      <td>Pau Gasol</td>
+      <td>CHI</td>
+    </tr>
+    <tr>
+      <td>2015-16</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2014-15</td>
+      <td>Victor Claver</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2014-15</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2014-15</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2014-15</td>
+      <td>Pau Gasol</td>
+      <td>CHI</td>
+    </tr>
+    <tr>
+      <td>2014-15</td>
+      <td>Jose Calderon</td>
+      <td>NYK</td>
+    </tr>
+    <tr>
+      <td>2013-14</td>
+      <td>Jose Calderon</td>
+      <td>DAL</td>
+    </tr>
+    <tr>
+      <td>2013-14</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2013-14</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2013-14</td>
+      <td>Victor Claver</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2013-14</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2012-13</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2012-13</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2012-13</td>
+      <td>Victor Claver</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2012-13</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2012-13</td>
+      <td>Jose Calderon</td>
+      <td>DET</td>
+    </tr>
+    <tr>
+      <td>2011-12</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2011-12</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2011-12</td>
+      <td>Ricky Rubio</td>
+      <td>MIN</td>
+    </tr>
+    <tr>
+      <td>2011-12</td>
+      <td>Rudy Fernandez</td>
+      <td>DEN</td>
+    </tr>
+    <tr>
+      <td>2011-12</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2010-11</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2010-11</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2010-11</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2010-11</td>
+      <td>Rudy Fernandez</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2009-10</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2009-10</td>
+      <td>Sergio Rodriguez</td>
+      <td>NYK</td>
+    </tr>
+    <tr>
+      <td>2009-10</td>
+      <td>Rudy Fernandez</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2009-10</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2009-10</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2008-09</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2008-09</td>
+      <td>Marc Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2008-09</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2008-09</td>
+      <td>Rudy Fernandez</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2008-09</td>
+      <td>Sergio Rodriguez</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2007-08</td>
+      <td>Jorge Garbajosa</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2007-08</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2007-08</td>
+      <td>Juan Carlos Navarro</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2007-08</td>
+      <td>Pau Gasol</td>
+      <td>LAL</td>
+    </tr>
+    <tr>
+      <td>2007-08</td>
+      <td>Sergio Rodriguez</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2006-07</td>
+      <td>Pau Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2006-07</td>
+      <td>Sergio Rodriguez</td>
+      <td>POR</td>
+    </tr>
+    <tr>
+      <td>2006-07</td>
+      <td>Jorge Garbajosa</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2006-07</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2005-06</td>
+      <td>Jose Calderon</td>
+      <td>TOR</td>
+    </tr>
+    <tr>
+      <td>2005-06</td>
+      <td>Pau Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2004-05</td>
+      <td>Pau Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2004-05</td>
+      <td>Raul Lopez</td>
+      <td>UTA</td>
+    </tr>
+    <tr>
+      <td>2003-04</td>
+      <td>Pau Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2003-04</td>
+      <td>Raul Lopez</td>
+      <td>UTA</td>
+    </tr>
+    <tr>
+      <td>2002-03</td>
+      <td>Pau Gasol</td>
+      <td>MEM</td>
+    </tr>
+    <tr>
+      <td>2001-02</td>
+      <td>Pau Gasol</td>
+      <td>MEM</td>
+    </tr>
+  </tbody>
+</table>
+    </body>
+    </html>
+    
