@@ -1,320 +1,290 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>International NBA Player Hub</title>
-    <meta charset="utf-8">
-    <!-- Load DataTables CSS for the beautiful table -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 20px; background-color: #f8f9fa; color: #333; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        h1 { text-align: center; text-transform: uppercase; letter-spacing: 1px; color: #222; margin-bottom: 25px; font-size: 28px; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
-        
-        /* Positioned to the left (flex-start) */
-        .nav-controls { display: flex; justify-content: flex-start; align-items: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-        .nav-select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; background-color: white; cursor: pointer; min-width: 180px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .nav-select:focus { outline: none; border-color: #007bff; }
-        
-        /* A visual divider between navigation dropdowns and filter dropdowns */
-        .divider { width: 1px; height: 30px; background-color: #ccc; margin: 0 5px; }
+    <title>International NBA Player Hub</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 20px; background-color: #f8f9fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        h1 { text-align: center; text-transform: uppercase; letter-spacing: 1px; color: #222; margin-bottom: 25px; font-size: 28px; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        
+        /* Positioned to the left (flex-start) */
+        .nav-controls { display: flex; justify-content: flex-start; align-items: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .nav-select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; background-color: white; cursor: pointer; min-width: 180px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .nav-select:focus { outline: none; border-color: #007bff; }
+        
+        /* A visual divider between navigation dropdowns and filter dropdowns */
+        .divider { width: 1px; height: 30px; background-color: #ccc; margin: 0 5px; }
 
-        #dataTable { width: 100% !important; margin-top: 20px; border-collapse: collapse; }
-        #dataTable th { background-color: #007bff; color: white; font-weight: 600; }
-        .dataTables_wrapper .dataTables_filter input { border: 1px solid #ccc; border-radius: 4px; padding: 6px; margin-left: 8px; }
-    </style>
+        #dataTable { width: 100% !important; margin-top: 20px; border-collapse: collapse; }
+        #dataTable th { background-color: #007bff; color: white; font-weight: 600; }
+        .dataTables_wrapper .dataTables_filter input { border: 1px solid #ccc; border-radius: 4px; padding: 6px; margin-left: 8px; }
+    </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 id="countryTitle">Loading Player Hub...</h1>
-    
-    <!-- Navigation & Filter Dropdowns -->
-    <div class="nav-controls" id="navControls" style="display: none;">
-        <!-- Page Navigators -->
-        <select id="countrySelect" class="nav-select" onchange="navigateTo('country', this.value)">
-            <option value="">-- Switch Country --</option>
-            <option value="ALL">🌍 Show Entire Database</option>
-        </select>
-        <select id="clubSelect" class="nav-select" onchange="navigateTo('club', this.value)">
-            <option value="">-- Switch Club --</option>
-            <option value="ALL">🏀 Show Entire Database</option>
-        </select>
-        
-        <div class="divider"></div>
-        
-        <!-- Instant Table Filter -->
-        <select id="seasonSelect" class="nav-select" style="display: none;" onchange="filterBySeason(this.value)">
-            <option value="">-- All Seasons --</option>
-        </select>
-    </div>
-    
-    <!-- Placeholder for Player Buttons (Top View) -->
-    <div id="playerContainerTop"></div>
+    <h1 id="countryTitle">Loading Player Hub...</h1>
+    
+    <div class="nav-controls" id="navControls" style="display: none;">
+        <select id="countrySelect" class="nav-select" onchange="navigateTo('country', this.value)">
+           <option value="">-- Switch Country --</option>
+           <option value="ALL">🌍 Show Entire Database</option>
+        </select>
+        <select id="clubSelect" class="nav-select" onchange="navigateTo('club', this.value)">
+           <option value="">-- Switch Club --</option>
+           <option value="ALL">🏀 Show Entire Database</option>
+        </select>
+        
+        <div class="divider"></div>
+        
+        <select id="seasonSelect" class="nav-select" style="display: none;" onchange="filterBySeason(this.value)">
+           <option value="">-- All Seasons --</option>
+        </select>
+    </div>
+    
+    <div id="playerContainerTop"></div>
 
-    <!-- Table Section Title -->
-    <h3 id="tableTitle" style="margin-top: 35px; margin-bottom: 15px; font-family: sans-serif; font-size: 18px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; display: none;"></h3>
-<!-- The short, precise footnote right below the title -->
-<p id="tableFootnote" style="margin-top: 0; margin-bottom: 15px; font-size: 13px; color: #666; font-style: italic; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; display: none; line-height: 1.6;"></p>
-    
-    <!-- The master data table -->
-    <table id="dataTable" class="display responsive nowrap"></table>
+    <h3 id="tableTitle" style="margin-top: 35px; margin-bottom: 15px; font-family: sans-serif; font-size: 18px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; display: none;"></h3>
+    <p id="tableFootnote" style="margin-top: 0; margin-bottom: 15px; font-size: 13px; color: #666; font-style: italic; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; display: none; line-height: 1.6;"></p>
+    
+    <table id="dataTable" class="display responsive nowrap"></table>
 
-    <!-- Placeholder for Player Buttons (Bottom View - Entire Database) -->
-    <div id="playerContainerBottom" style="margin-top: 35px;"></div>
+    <div id="playerContainerBottom" style="margin-top: 35px;"></div>
 </div>
 
-<!-- Load jQuery, DataTables, and PapaParse -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const selectedCountry = urlParams.get('country');
-    const selectedClub = urlParams.get('club');
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCountry = urlParams.get('country');
+    const selectedClub = urlParams.get('club');
 
-    let searchTarget = "";
+    let searchTarget = "";
 
-    if (selectedCountry) {
-        searchTarget = selectedCountry;
-        document.getElementById("countryTitle").innerText = selectedCountry + " NBA Players Hub (1996-2026)";
-    } else if (selectedClub) {
-        searchTarget = selectedClub;
-        document.getElementById("countryTitle").innerText = selectedClub + " NBA Players Hub (1996-2026)";
-    } else {
-        document.getElementById("countryTitle").innerText = "Global NBA Players Hub (1996-2026)";
-    }
+    if (selectedCountry) {
+        searchTarget = selectedCountry;
+        document.getElementById("countryTitle").innerText = selectedCountry + " NBA Players Hub (1996-2026)";
+    } else if (selectedClub) {
+        searchTarget = selectedClub;
+        document.getElementById("countryTitle").innerText = selectedClub + " NBA Players Hub (1996-2026)";
+    } else {
+        document.getElementById("countryTitle").innerText = "Global NBA Players Hub (1996-2026)";
+    }
 
-    window.navigateTo = function(type, value) {
-        if (!value) return;
-        if (value === 'ALL') {
-            window.location.href = window.location.pathname; 
-        } else {
-            window.location.href = window.location.pathname + '?' + type + '=' + encodeURIComponent(value);
-        }
-    };
+    window.navigateTo = function(type, value) {
+        if (!value) return;
+        if (value === 'ALL') {
+            window.location.href = window.location.pathname; 
+        } else {
+            window.location.href = window.location.pathname + '?' + type + '=' + encodeURIComponent(value);
+        }
+    };
 
-    const csvUrl = "https://raw.githubusercontent.com/galkevich32/global-game/refs/heads/main/intl_nba.csv";
+    const csvUrl = "https://raw.githubusercontent.com/galkevich32/global-game/refs/heads/main/intl_nba.csv";
 
-    Papa.parse(csvUrl, {
-        download: true,
-        header: true, 
-        skipEmptyLines: true,
-        complete: function(results) {
-            let data = results.data;
-            
-            if (!data || data.length === 0) {
-                document.getElementById("countryTitle").innerText = "Error: CSV file could not be loaded.";
-                return;
-            }
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, 
+        skipEmptyLines: true,
+        complete: function(results) {
+            let data = results.data;
+            
+            if (!data || data.length === 0) {
+                document.getElementById("countryTitle").innerText = "Error: CSV file could not be loaded.";
+                return;
+            }
 
-            const sampleRow = data[0];
-            const countryKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'country');
-            const clubKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'club' || k.toLowerCase().trim() === 'team');
-            const playerKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim().includes('player') || k.toLowerCase().trim() === 'name');
-            const seasonKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'season' || k.toLowerCase().trim() === 'year');
-            
-            let tableHeaders = [];
-            Object.keys(data[0]).forEach(key => {
-                tableHeaders.push({ title: key, data: key, defaultContent: "" });
-            });
+            const sampleRow = data[0];
+            const countryKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'country');
+            const clubKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'club' || k.toLowerCase().trim() === 'team');
+            const playerKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim().includes('player') || k.toLowerCase().trim() === 'name');
+            const seasonKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'season' || k.toLowerCase().trim() === 'year');
+            
+            let tableHeaders = [];
+            Object.keys(data[0]).forEach(key => {
+                tableHeaders.push({ title: key, data: key, defaultContent: "" });
+            });
 
-            // Find the index of the Season column for initial sorting
-            const seasonColIdx = tableHeaders.findIndex(h => h.data === seasonKey);
+            const seasonColIdx = tableHeaders.findIndex(h => h.data === seasonKey);
 
-            // Switch targets depending on what parameter exists in the link URL
-            let filterKey = selectedCountry ? countryKey : clubKey;
-            let filteredData = data; 
+            let filterKey = selectedCountry ? countryKey : clubKey;
+            let filteredData = data; 
 
-            if (searchTarget && filterKey) {
-                filteredData = data.filter(row => {
-                    if (!row[filterKey]) return false;
-                    return row[filterKey].toString().trim().toLowerCase() === searchTarget.toString().trim().toLowerCase();
-                });
+            if (searchTarget && filterKey) {
+                filteredData = data.filter(row => {
+                    if (!row[filterKey]) return false;
+                    return row[filterKey].toString().trim().toLowerCase() === searchTarget.toString().trim().toLowerCase();
+                });
 
-                if (filteredData.length === 0) {
-                    filteredData = data.filter(row => {
-                        if (!row[filterKey]) return false;
-                        let csvVal = row[filterKey].toString().toLowerCase();
-                        let urlVal = searchTarget.toString().toLowerCase();
-                        return csvVal.includes(urlVal) || urlVal.includes(csvVal);
-                    });
-                }
-            }
+                if (filteredData.length === 0) {
+                    filteredData = data.filter(row => {
+                        if (!row[filterKey]) return false;
+                        let csvVal = row[filterKey].toString().toLowerCase();
+                        let urlVal = searchTarget.toString().toLowerCase();
+                        return csvVal.includes(urlVal) || urlVal.includes(csvVal);
+                    });
+                }
+            }
 
-            // --- POPULATE DROPDOWNS ---
-            if (countryKey && clubKey) {
-                let uniqueCountries = [...new Set(data.map(row => row[countryKey]))].filter(Boolean).sort();
-                let uniqueClubs = [...new Set(data.map(row => row[clubKey]))].filter(Boolean).sort();
+            // --- POPULATE DROPDOWNS ---
+            if (countryKey && clubKey) {
+                let uniqueCountries = [...new Set(data.map(row => row[countryKey]))].filter(Boolean).sort();
+                let uniqueClubs = [...new Set(data.map(row => row[clubKey]))].filter(Boolean).sort();
 
-                let countrySelect = document.getElementById("countrySelect");
-                uniqueCountries.forEach(country => {
-                    let option = document.createElement("option");
-                    option.value = country;
-                    option.text = country;
-                    if (selectedCountry && selectedCountry.toLowerCase() === country.toLowerCase()) option.selected = true;
-                    countrySelect.appendChild(option);
-                });
+                let countrySelect = document.getElementById("countrySelect");
+                uniqueCountries.forEach(country => {
+                    let option = document.createElement("option");
+                    option.value = country;
+                    option.text = country;
+                    if (selectedCountry && selectedCountry.toLowerCase() === country.toLowerCase()) option.selected = true;
+                    countrySelect.appendChild(option);
+                });
 
-                let clubSelect = document.getElementById("clubSelect");
-                uniqueClubs.forEach(club => {
-                    let option = document.createElement("option");
-                    option.value = club;
-                    option.text = club;
-                    if (selectedClub && selectedClub.toLowerCase() === club.toLowerCase()) option.selected = true;
-                    clubSelect.appendChild(option);
-                });
+                let clubSelect = document.getElementById("clubSelect");
+                uniqueClubs.forEach(club => {
+                    let option = document.createElement("option");
+                    option.value = club;
+                    option.text = club;
+                    if (selectedClub && selectedClub.toLowerCase() === club.toLowerCase()) option.selected = true;
+                    clubSelect.appendChild(option);
+                });
 
-                if (selectedCountry) {
-                    document.getElementById("clubSelect").style.display = "none";
-                } else if (selectedClub) {
-                    document.getElementById("countrySelect").style.display = "none";
-                }
+                if (selectedCountry) {
+                    document.getElementById("clubSelect").style.display = "none";
+                } else if (selectedClub) {
+                    document.getElementById("countrySelect").style.display = "none";
+                }
 
-                document.getElementById("navControls").style.display = "flex";
-            }
+                document.getElementById("navControls").style.display = "flex";
+            }
 
-            // --- POPULATE CONTEXT-AWARE SEASON MENU ---
-            if (seasonKey) {
-                let uniqueSeasons = [...new Set(filteredData.map(row => row[seasonKey]))].filter(Boolean).sort().reverse();
-                
-                let seasonSelect = document.getElementById("seasonSelect");
-                uniqueSeasons.forEach(season => {
-                    let option = document.createElement("option");
-                    option.value = season;
-                    option.text = "Season: " + season;
-                    seasonSelect.appendChild(option);
-                });
-                
-                seasonSelect.style.display = "inline-block";
-            }
+            // --- POPULATE CONTEXT-AWARE SEASON MENU ---
+            if (seasonKey) {
+                let uniqueSeasons = [...new Set(filteredData.map(row => row[seasonKey]))].filter(Boolean).sort().reverse();
+                let seasonSelect = document.getElementById("seasonSelect");
+                uniqueSeasons.forEach(season => {
+                    let option = document.createElement("option");
+                    option.value = season;
+                    option.text = "Season: " + season;
+                    seasonSelect.appendChild(option);
+                });
+                seasonSelect.style.display = "inline-block";
+            }
 
-            // --- GENERATE UNIQUE PLAYER BUTTONS ---
-            if (playerKey) {
-                let uniquePlayers = [...new Set(filteredData.map(row => row[playerKey]))].filter(Boolean).sort();
-                
-                let buttonsHtml = `
-                <div style="margin-bottom: 25px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;">
-                    <h3 style="margin-top: 0; font-family: sans-serif; font-size: 18px; color: #333;">
-                        Unique Players (${uniquePlayers.length}) — Click a name to view a player's career timeline:
-                    </h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="playerButtonGroup">
-                        <button class="player-btn" onclick="filterByPlayer('')" 
-                                style="padding: 8px 14px; border-radius: 20px; border: none; background-color: #333; color: white; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                            Show All
-                        </button>
-                `;
-                
-                uniquePlayers.forEach(player => {
-                    let safePlayerName = player.replace(/'/g, "\\'"); 
-                    buttonsHtml += `
-                        <button class="player-btn" onclick="filterByPlayer('${safePlayerName}', this)" 
-                                style="padding: 8px 14px; border-radius: 20px; border: 1px solid #007bff; background-color: white; color: #007bff; cursor: pointer; font-size: 14px; transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            ${player}
-                        </button>`;
-                });
-                
-                buttonsHtml += `</div></div>`;
-                
-                if (searchTarget) {
-                    $('#playerContainerTop').html(buttonsHtml);
-                } else {
-                    $('#playerContainerBottom').html(buttonsHtml);
-                }
-            }
+            // --- GENERATE UNIQUE PLAYER BUTTONS ---
+            if (playerKey) {
+                let uniquePlayers = [...new Set(filteredData.map(row => row[playerKey]))].filter(Boolean).sort();
+                
+                let buttonsHtml = `
+                <div style="margin-bottom: 25px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;">
+                    <h3 style="margin-top: 0; font-family: sans-serif; font-size: 18px; color: #333;">
+                        Unique Players (${uniquePlayers.length}) — Click a name to view a player's career timeline:
+                    </h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="playerButtonGroup">
+                        <button class="player-btn" onclick="filterByPlayer('')" 
+                                 style="padding: 8px 14px; border-radius: 20px; border: none; background-color: #333; color: white; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                             Show All
+                        </button>
+                `;
+                
+                uniquePlayers.forEach(player => {
+                    let safePlayerName = player.replace(/'/g, "\\'"); 
+                    buttonsHtml += `
+                        <button class="player-btn" onclick="filterByPlayer('${safePlayerName}', this)" 
+                                 style="padding: 8px 14px; border-radius: 20px; border: 1px solid #007bff; background-color: white; color: #007bff; cursor: pointer; font-size: 14px; transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                             ${player}
+                        </button>`;
+                });
+                
+                buttonsHtml += `</div></div>`;
+                
+                if (searchTarget) {
+                    $('#playerContainerTop').html(buttonsHtml);
+                } else {
+                    $('#playerContainerBottom').html(buttonsHtml);
+                }
+            }
 
-            $('#tableTitle').text(`All Appearances by Season (${filteredData.length})`).show();
-            // --- DYNAMICALLY GENERATE HUB-SPECIFIC FOOTNOTES ---
-let footnoteHtml = "";
-if (selectedClub) {
-    // Club Hub gets both notes
-    footnoteHtml = `* Tracks players who saw game action each season.<br>
-                    * Only the final team a player suited up for in the season is counted (e.g., 2024–25 Dennis Schröder: Detroit only).`;
-} else {
-    // Country Hub (and Global View) gets only the game action note
-    footnoteHtml = `* Tracks players who saw game action each season.`;
-}
-$('#tableFootnote').html(footnoteHtml).show();
-            
-            // Initialize the Data table
-            window.dataTableInstance = $('#dataTable').DataTable({
-                data: filteredData,
-                columns: tableHeaders,
-                pageLength: 25,
-                responsive: true,
-                // Initial sort: sets the Season column to descending order (Z to A)
-                order: (seasonColIdx !== -1) ? [[seasonColIdx, 'desc']] : [],
-                columnDefs: [
-                    {
-                        targets: [0],
-                        visible: false,
-                        searchable: true
-                    },
-                    {
-                        targets: [3], 
-                        visible: selectedClub ? false : true,
-                        searchable: true
-                    },
-                    {
-                        targets: [8], 
-                        visible: selectedCountry ? false : true,
-                        searchable: true
-                    }
-                ]
-            });
+            $('#tableTitle').text(`All Appearances by Season (${filteredData.length})`).show();
+            
+            // --- DYNAMICALLY GENERATE HUB-SPECIFIC FOOTNOTES ---
+            let footnoteHtml = "";
+            if (selectedClub) {
+                footnoteHtml = `* Tracks players who saw game action each season.<br>
+                                * Only the final team a player suited up for in the season is counted (e.g., 2024–25 Dennis Schröder: Detroit only).`;
+            } else {
+                footnoteHtml = `* Tracks players who saw game action each season.`;
+            }
+            $('#tableFootnote').html(footnoteHtml).show();
+            
+            // Initialize the Data table
+            window.dataTableInstance = $('#dataTable').DataTable({
+                data: filteredData,
+                columns: tableHeaders,
+                pageLength: 25,
+                responsive: true,
+                order: (seasonColIdx !== -1) ? [[seasonColIdx, 'desc']] : [],
+                columnDefs: [
+                    { targets: [0], visible: false, searchable: true },
+                    { targets: [3], visible: selectedClub ? false : true, searchable: true },
+                    { targets: [8], visible: selectedCountry ? false : true, searchable: true }
+                ]
+            });
 
-            // --- FILTER THE TABLE BY CLICKED PLAYER ---
-            window.filterByPlayer = function(playerName, clickedElement) {
-                const allButtons = document.querySelectorAll('.player-btn');
-                allButtons.forEach(btn => {
-                    if (btn.innerText === 'Show All') {
-                        btn.style.backgroundColor = '#e0e0e0';
-                        btn.style.color = '#333';
-                    } else {
-                        btn.style.backgroundColor = 'white';
-                        btn.style.color = '#007bff';
-                    }
-                });
+            // --- FILTER THE TABLE BY CLICKED PLAYER ---
+            window.filterByPlayer = function(playerName, clickedElement) {
+                const allButtons = document.querySelectorAll('.player-btn');
+                allButtons.forEach(btn => {
+                    if (btn.innerText === 'Show All') {
+                        btn.style.backgroundColor = '#e0e0e0';
+                        btn.style.color = '#333';
+                    } else {
+                        btn.style.backgroundColor = 'white';
+                        btn.style.color = '#007bff';
+                    }
+                });
 
-                if (clickedElement) {
-                    clickedElement.style.backgroundColor = '#007bff';
-                    clickedElement.style.color = 'white';
-                } else {
-                    allButtons[0].style.backgroundColor = '#333';
-                    allButtons[0].style.color = 'white';
-                }
+                if (clickedElement) {
+                    clickedElement.style.backgroundColor = '#007bff';
+                    clickedElement.style.color = 'white';
+                } else {
+                    allButtons[0].style.backgroundColor = '#333';
+                    allButtons[0].style.color = 'white';
+                }
 
-                const playerColIndex = tableHeaders.findIndex(h => h.data === playerKey);
-                
-                if (playerName === '') {
-                    window.dataTableInstance.column(playerColIndex).search('').draw(); 
-                } else {
-                    window.dataTableInstance.column(playerColIndex).search('^' + playerName.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1") + '$', true, false).draw();
-                }
+                const playerColIndex = tableHeaders.findIndex(h => h.data === playerKey);
+                
+                if (playerName === '') {
+                    window.dataTableInstance.column(playerColIndex).search('').draw(); 
+                } else {
+                    window.dataTableInstance.column(playerColIndex).search('^' + playerName.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1") + '$', true, false).draw();
+                }
 
-                if (!searchTarget) {
-                    document.getElementById('tableTitle').scrollIntoView({ behavior: 'smooth' });
-                }
-            };
+                if (!searchTarget) {
+                    document.getElementById('tableTitle').scrollIntoView({ behavior: 'smooth' });
+                }
+            };
 
-            // --- FILTER THE TABLE BY DROPDOWN SEASON ---
-            window.filterBySeason = function(season) {
-                const seasonColIndex = tableHeaders.findIndex(h => h.data === seasonKey);
-                
-                if (season === '') {
-                    window.dataTableInstance.column(seasonColIndex).search('').draw(); 
-                } else {
-                    window.dataTableInstance.column(seasonColIndex).search('^' + season.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1") + '$', true, false).draw();
-                }
-            };
+            // --- FILTER THE TABLE BY DROPDOWN SEASON ---
+            window.filterBySeason = function(season) {
+                const seasonColIndex = tableHeaders.findIndex(h => h.data === seasonKey);
+                if (season === '') {
+                    window.dataTableInstance.column(seasonColIndex).search('').draw(); 
+                } else {
+                    window.dataTableInstance.column(seasonColIndex).search('^' + season.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1") + '$', true, false).draw();
+                }
+            };
 
-        },
-        error: function(err) {
-            document.getElementById("countryTitle").innerText = "Network Error: Failed to fetch CSV.";
-        }
-    });
+        },
+        error: function(err) {
+            document.getElementById("countryTitle").innerText = "Network Error: Failed to fetch CSV.";
+        }
+    });
 </script>
 
 </body>
 </html>
-
