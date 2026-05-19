@@ -1,0 +1,285 @@
+:root {
+  --bg:#0b1220;
+  --card:#0f1724;
+  --muted:#9aa7bf;
+  --accent:#1f6feb;
+  --radius:12px;
+  color-scheme: dark;
+  color: #e6eef8;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  /* I removed the 5px/10px margins here because they will break the full-screen horizontal layout */
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: linear-gradient(180deg,#071022 0%, #081827 100%);
+  line-height: 1.45;
+  
+  /* These two lines lock the main body from scrolling vertically */
+  overflow: hidden; 
+  height: 100vh;
+}
+
+header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.logo {
+  width:56px;
+  height:56px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),#6dd3ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color:#04203a;
+}
+
+h1, .page-title {
+  font-size: 24px;
+  line-height: 1.08;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 0.4em;
+}
+
+h2 {
+  font-size: 16px;
+  text-align: center;
+}
+
+p.lead {
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.5;       /* Relaxed slightly from 1.3 for easier reading */
+  margin-bottom: 14px;    /* Cut down from 32px to create a clean paragraph gap */
+}
+/* Main wrapper */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: block;      /* Changed from grid to block */
+  min-height: 80vh; 
+}
+
+/* Card: MOBILE DEFAULT */
+.card {
+  width: 100%;
+  margin: 0 auto;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.card h2 {
+  text-align: center;
+}
+
+/* Layout: MOBILE DEFAULT */
+.layout {
+  display: grid;
+  gap: 18px;
+}
+
+/* Photos: MOBILE DEFAULT */
+.photo, .top-photo {
+  width: 100%;
+  max-width: 700px;
+  margin: 5px auto;
+  display: block;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.photo-wrap.center {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Charts: MOBILE DEFAULT */
+.chart-embed {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border: none;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+
+/* ------------------------------ */
+/* DESKTOP OVERRIDES              */
+/* ------------------------------ */
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+@media (min-width: 900px) {
+  .container {
+    max-width: 80vw;     /* Widened from 75vw */
+    margin-left: 6vw;    /* Perfectly positions it left */
+    margin-right: auto;  
+    display: block;      
+    min-height: 80vh;
+  }
+  
+  .card {
+    max-width: 900px;    /* Increased from 750px so text stretches wider */
+    width: 100%;
+    min-height: 75vh;    /* Keeps the deep, elegant look */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    padding: 32px;       
+  }
+}
+
+  .photo, .top-photo {
+    max-width: 600px;
+  }
+
+  .chart-embed {
+    width: 95%;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-bottom: 32px !important;
+  }
+}
+
+.chart-embed-small {
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  height: auto; 
+  display: block;
+  margin-left: 5%;
+  margin-right:0;
+}
+
+@media (min-width: 900px) {
+  .chart-embed-small {
+    width: 75% !important;       
+    max-width: 600px !important; 
+    margin-left: 15px !important; 
+    margin-right: auto !important; 
+    display: block;
+  }
+}
+
+@media (min-width: 900px) {
+  .photo {
+    max-width: 570px;
+  }
+  .top-photo {margin-top: -20px !important;}
+}
+
+@media (max-width: 899px) {
+  .chart-embed-small {
+    margin-left: -10px;
+  }
+}
+
+.photo-wrap {
+  position: relative;  
+}
+
+.speech-bubble {
+  position: relative;
+  top: -18px;
+}
+
+/* ----------------------------------------- */
+/* NEW HORIZONTAL SCROLL & NAVIGATION STYLES */
+/* ----------------------------------------- */
+
+/* The track holding all panels */
+.scroll-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  height: 100vh;
+  width: 100vw;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for a cleaner look */
+.scroll-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each individual page */
+.panel {
+  flex: 0 0 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  overflow-y: auto; /* Allows reading vertically inside the page if text is long */
+  padding: 40px 0;
+}
+
+/* Navigation Arrow Buttons */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--card);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.nav-arrow:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Move the left arrow inside the left margin */
+.left-arrow { 
+  left: 1vw; 
+}
+
+/* Bring the right arrow in so it hugs the right side of your 75vw container */
+.right-arrow { 
+  left: 82vw; /* Positions it perfectly right after your text card ends */
+  right: auto; 
+}
+/* Custom class to left-align specific chapter subheaders */
+.subhead-left {
+    text-align: left !important;
+    width: 100%;
+    margin-left: 0;
+    margin-right: auto;
+}
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
