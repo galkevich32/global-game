@@ -290,7 +290,7 @@ p.lead {
   
   /* 1. Add generous margins to the left and right of the text */
   .container {
-    padding: 0 55px !important; /* Pushes text inward to create clear gutters */
+    padding: 0 38px !important; /* Pushes text inward to create clear gutters */
   }
 
   /* 2. Scale down the arrows so they don't overpower mobile screens */
