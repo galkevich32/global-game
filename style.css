@@ -328,6 +328,10 @@ p.lead {
     line-height: 1.5;
     margin-bottom: 14px;
   }
+  /* Fixes iOS Safari bottom address bar clipping text */
+  .panel {
+    padding-bottom: 85px !important; 
+  }
   /* Bonus: Ensure your embedded elements respect the new container padding */
   .chart-embed, .split-column-chart {
     width: 100% !important;
