@@ -290,24 +290,24 @@ p.lead {
   
   /* 1. Add generous margins to the left and right of the text */
   .container {
-    padding: 0 38px !important; /* Pushes text inward to create clear gutters */
+    padding: 0 40px !important; /* Pushes text inward to create clear gutters */
   }
 
   /* 2. Scale down the arrows so they don't overpower mobile screens */
   .nav-arrow {
-    width: 38px;
-    height: 38px;
-    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
     top: 50%;
   }
 
   /* 3. Tuck the arrows neatly into the newly created side margins */
   .left-arrow {
-    left: 8px; /* Fits comfortably inside the 55px text gutter */
+    left: 4px; /* Fits comfortably inside the 55px text gutter */
   }
 
   .right-arrow {
-    right: 8px;      /* Fixes it to the right edge */
+    right: 4px;      /* Fixes it to the right edge */
     left: auto;      /* Overrides the 'left: 82vw' from your desktop settings */
   }
   /* 1. Allows the text/chart to shrink to fit inside your 38px margins */
