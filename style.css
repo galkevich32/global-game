@@ -310,7 +310,24 @@ p.lead {
     right: 8px;      /* Fixes it to the right edge */
     left: auto;      /* Overrides the 'left: 82vw' from your desktop settings */
   }
-  
+  /* 1. Allows the text/chart to shrink to fit inside your 38px margins */
+  .split-column-text, 
+  .split-column-chart {
+    min-width: 100% !important; 
+    flex: 1 1 100% !important;
+  }
+
+  /* 2. Overrides the negative inline margin and pushes the next paragraph down */
+  .split-row {
+    margin: 0 0 40px 0 !important; 
+  }
+
+  /* Optional: Make sure standard <p> tags inside the split column match your lead text */
+  .split-column-text p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
   /* Bonus: Ensure your embedded elements respect the new container padding */
   .chart-embed, .split-column-chart {
     width: 100% !important;
