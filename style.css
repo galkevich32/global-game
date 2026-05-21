@@ -339,29 +339,24 @@ p.lead {
     margin-right: 0 !important;
   }
 }
-.dataset-cta-wrapper {
-  margin: 40px 0; 
-  text-align: center; 
-}
-
-.dataset-btn {
+.dataset-btn-inline {
   display: inline-block;
   background-color: var(--accent);
-  color: #ffffff; /* Hardcoded white for contrast against the blue */
-  padding: 14px 32px;
+  color: #ffffff;
+  padding: 4px 12px;
+  margin-left: 8px;
   text-decoration: none;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 0.9em;
   font-weight: 600;
-  border-radius: 8px;
-  border: 2px solid var(--accent);
-  /* Adds a very subtle glow matching your accent color */
-  box-shadow: 0 4px 14px rgba(31, 111, 235, 0.2); 
+  border-radius: 4px;
+  vertical-align: middle;
   transition: all 0.2s ease;
 }
 
-.dataset-btn:hover {
-  background-color: var(--bg); /* Pulls your dark background on hover */
-  color: var(--accent); /* Text becomes blue */
-  transform: translateY(-2px);
+.dataset-btn-inline:hover {
+  background-color: var(--bg);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 3px 11px; 
 }
