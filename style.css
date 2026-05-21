@@ -339,24 +339,24 @@ p.lead {
     margin-right: 0 !important;
   }
 }
-.dataset-btn-inline {
+/* The default desktop look */
+.dataset-btn {
   display: inline-block;
   background-color: var(--accent);
   color: #ffffff;
   padding: 4px 12px;
   margin-left: 8px;
   text-decoration: none;
-  font-family: inherit;
-  font-size: 0.9em;
   font-weight: 600;
   border-radius: 4px;
   vertical-align: middle;
-  transition: all 0.2s ease;
 }
 
-.dataset-btn-inline:hover {
-  background-color: var(--bg);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 3px 11px; 
+/* The mobile fix */
+@media (max-width: 600px) {
+  .dataset-btn {
+    display: block;        /* Forces it to a new line */
+    width: fit-content;    /* Keeps it from stretching across the whole screen */
+    margin: 15px 0 0 0;    /* Puts space above the button, aligns it to the left */
+  }
 }
