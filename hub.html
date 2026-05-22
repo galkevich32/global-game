@@ -221,10 +221,10 @@
             // --- DYNAMICALLY GENERATE HUB-SPECIFIC FOOTNOTES ---
             let footnoteHtml = "";
             if (selectedClub) {
-                footnoteHtml = `* Tracks players who saw game action each season (All data, including country designations, was sourced from the official player biographies on NBA.com).<br>
-                                 * Only the final team a player suited up for in the season is counted (e.g., 2024–25 Dennis Schröder: Detroit only).`;
+                footnoteHtml = `* Tracks players who saw game action each season / All data, including country designations, was sourced from the official player biographies on NBA.com<br>
+                                 * Only the final team a player suited up for in the season is counted (e.g., 2024–25 Dennis Schröder: Detroit only)`;
             } else {
-                footnoteHtml = `* Tracks players who saw game action each season (All data, including country designations, was sourced from the official player biographies on NBA.com).`;
+                footnoteHtml = `* Tracks players who saw game action each season / All data, including country designations, was sourced from the official player biographies on NBA.com`;
             }
             $('#tableFootnote').html(footnoteHtml).show();
             
