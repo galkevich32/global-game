@@ -42,7 +42,6 @@
         
         <div class="divider"></div>
         
-        <!-- UPDATED: Season now uses navigateTo to update the URL -->
         <select id="seasonSelect" class="nav-select" style="display: none;" onchange="navigateTo('season', this.value)">
            <option value="">-- Select Season --</option>
            <option value="ALL">📅 All Seasons</option>
@@ -70,11 +69,11 @@
     const selectedCountry = urlParams.get('country');
     const selectedClub = urlParams.get('club');
     const selectedContinent = urlParams.get('continent');
-    const selectedSeason = urlParams.get('season'); // NEW: Grab season from URL
+    const selectedSeason = urlParams.get('season');
 
     // Build the dynamic page title based on all active filters
     let titleParts = [];
-    if (selectedSeason) titleParts.push(selectedSeason); // Put season first
+    if (selectedSeason) titleParts.push(selectedSeason); 
     if (selectedContinent) titleParts.push(selectedContinent);
     if (selectedCountry) titleParts.push(selectedCountry);
     if (selectedClub) titleParts.push(selectedClub);
@@ -85,7 +84,7 @@
         document.getElementById("countryTitle").innerText = "Global NBA Players Hub (1996-2026)";
     }
 
-    // Stacks URL parameters
+    // UPDATED: Navigates and auto-clears downstream filters (The Cascade effect)
     window.navigateTo = function(type, value) {
         if (!value) return;
         const currentParams = new URLSearchParams(window.location.search);
@@ -94,6 +93,18 @@
             currentParams.delete(type);
         } else {
             currentParams.set(type, value);
+        }
+
+        // CASCADING RESET: If you change a broad category, reset the narrower ones
+        if (type === 'continent') {
+            currentParams.delete('country');
+            currentParams.delete('club');
+            currentParams.delete('season');
+        } else if (type === 'country') {
+            currentParams.delete('club');
+            currentParams.delete('season');
+        } else if (type === 'club') {
+            currentParams.delete('season');
         }
 
         const newQueryString = currentParams.toString();
@@ -160,7 +171,7 @@
                 return matchContinent && matchCountry && matchClub;
             });
 
-            // STEP 2: Filter by Season (if selected)
+            // STEP 2: Filter by Season
             let finalFilteredData = geoClubFilteredData;
             if (selectedSeason && seasonKey) {
                 finalFilteredData = geoClubFilteredData.filter(row => {
@@ -170,11 +181,33 @@
                 });
             }
 
-            // --- POPULATE DROPDOWNS ---
+            // --- UPDATED: POPULATE CASCADING DROPDOWNS ---
             if (countryKey && clubKey && continentKey) {
+                
+                // 1. Continents menu always shows all
                 let uniqueContinents = [...new Set(data.map(row => row[continentKey]))].filter(Boolean).sort();
-                let uniqueCountries = [...new Set(data.map(row => row[countryKey]))].filter(Boolean).sort();
-                let uniqueClubs = [...new Set(data.map(row => row[clubKey]))].filter(Boolean).sort();
+
+                // 2. Countries menu filters based on selected Continent
+                let countryPool = data;
+                if (selectedContinent) {
+                    let searchVal = selectedContinent.toString().toLowerCase();
+                    countryPool = countryPool.filter(row => {
+                        let rowVal = (row[continentKey] || "").toString().toLowerCase();
+                        return (rowVal === searchVal || rowVal.includes(searchVal) || searchVal.includes(rowVal));
+                    });
+                }
+                let uniqueCountries = [...new Set(countryPool.map(row => row[countryKey]))].filter(Boolean).sort();
+
+                // 3. Clubs menu filters based on selected Continent AND Country
+                let clubPool = countryPool;
+                if (selectedCountry) {
+                    let searchVal = selectedCountry.toString().toLowerCase();
+                    clubPool = clubPool.filter(row => {
+                        let rowVal = (row[countryKey] || "").toString().toLowerCase();
+                        return (rowVal === searchVal || rowVal.includes(searchVal) || searchVal.includes(rowVal));
+                    });
+                }
+                let uniqueClubs = [...new Set(clubPool.map(row => row[clubKey]))].filter(Boolean).sort();
 
                 let continentSelect = document.getElementById("continentSelect");
                 uniqueContinents.forEach(continent => {
@@ -208,7 +241,6 @@
 
             // --- POPULATE CONTEXT-AWARE SEASON MENU ---
             if (seasonKey) {
-                // Uses geoClubFilteredData so it only shows seasons where your selected filters actually existed
                 let uniqueSeasons = [...new Set(geoClubFilteredData.map(row => row[seasonKey]))].filter(Boolean).sort().reverse();
                 let seasonSelect = document.getElementById("seasonSelect");
                 uniqueSeasons.forEach(season => {
@@ -223,7 +255,6 @@
 
             // --- GENERATE UNIQUE PLAYER BUTTONS ---
             if (playerKey) {
-                // Buttons are generated using finalFilteredData, meaning they obey the Season filter!
                 let uniquePlayers = [...new Set(finalFilteredData.map(row => row[playerKey]))].filter(Boolean).sort();
                 
                 let buttonsHtml = `
@@ -280,7 +311,6 @@
             if ((selectedCountry || selectedContinent) && continentColIdx !== -1) {
                 columnDefinitions.push({ targets: [continentColIdx], visible: false, searchable: true });
             }
-            // Hide the season column if you are filtering by a specific season!
             if (selectedSeason && seasonColIdx !== -1) {
                 columnDefinitions.push({ targets: [seasonColIdx], visible: false, searchable: true });
             }
