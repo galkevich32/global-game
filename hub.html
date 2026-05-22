@@ -28,6 +28,11 @@
     <h1 id="countryTitle">Loading Player Hub...</h1>
     
     <div class="nav-controls" id="navControls" style="display: none;">
+        <!-- Added Continent Dropdown -->
+        <select id="continentSelect" class="nav-select" onchange="navigateTo('continent', this.value)">
+           <option value="">-- Select Continent --</option>
+           <option value="ALL">🌍 Show Entire Database</option>
+        </select>
         <select id="countrySelect" class="nav-select" onchange="navigateTo('country', this.value)">
            <option value="">-- Select Country --</option>
            <option value="ALL">🌍 Show Entire Database</option>
@@ -49,7 +54,6 @@
     <h3 id="tableTitle" style="margin-top: 35px; margin-bottom: 15px; font-family: sans-serif; font-size: 18px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; display: none;"></h3>
     <p id="tableFootnote" style="margin-top: 0; margin-bottom: 15px; font-size: 13px; color: #666; font-style: italic; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; display: none; line-height: 1.6;"></p>
     
-    <!-- Table is now wrapped inside a scroll containment layout block -->
     <div class="table-responsive-container">
         <table id="dataTable" class="display nowrap"></table>
     </div>
@@ -65,15 +69,20 @@
     const urlParams = new URLSearchParams(window.location.search);
     const selectedCountry = urlParams.get('country');
     const selectedClub = urlParams.get('club');
+    const selectedContinent = urlParams.get('continent'); // FIX: Added URL check for continent
 
     let searchTarget = "";
 
+    // FIX: Added routing logic for Continents
     if (selectedCountry) {
         searchTarget = selectedCountry;
         document.getElementById("countryTitle").innerText = selectedCountry + " NBA Players Hub (1996-2026)";
     } else if (selectedClub) {
         searchTarget = selectedClub;
         document.getElementById("countryTitle").innerText = selectedClub + " NBA Players Hub (1996-2026)";
+    } else if (selectedContinent) {
+        searchTarget = selectedContinent;
+        document.getElementById("countryTitle").innerText = selectedContinent + " NBA Players Hub (1996-2026)";
     } else {
         document.getElementById("countryTitle").innerText = "Global NBA Players Hub (1996-2026)";
     }
@@ -106,8 +115,6 @@
             const clubKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'club' || k.toLowerCase().trim() === 'team');
             const playerKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim().includes('player') || k.toLowerCase().trim() === 'name');
             const seasonKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'season' || k.toLowerCase().trim() === 'year');
-            
-            // Dynamic check to find the Continent column index
             const continentKey = Object.keys(sampleRow).find(k => k.toLowerCase().trim() === 'continent');
             
             let tableHeaders = [];
@@ -118,7 +125,12 @@
             const seasonColIdx = tableHeaders.findIndex(h => h.data === seasonKey);
             const continentColIdx = tableHeaders.findIndex(h => h.data === continentKey);
 
-            let filterKey = selectedCountry ? countryKey : clubKey;
+            // FIX: Added continent to the filtering rules
+            let filterKey = null;
+            if (selectedCountry) filterKey = countryKey;
+            else if (selectedClub) filterKey = clubKey;
+            else if (selectedContinent) filterKey = continentKey;
+
             let filteredData = data; 
 
             if (searchTarget && filterKey) {
@@ -138,9 +150,19 @@
             }
 
             // --- POPULATE DROPDOWNS ---
-            if (countryKey && clubKey) {
+            if (countryKey && clubKey && continentKey) {
+                let uniqueContinents = [...new Set(data.map(row => row[continentKey]))].filter(Boolean).sort();
                 let uniqueCountries = [...new Set(data.map(row => row[countryKey]))].filter(Boolean).sort();
                 let uniqueClubs = [...new Set(data.map(row => row[clubKey]))].filter(Boolean).sort();
+
+                let continentSelect = document.getElementById("continentSelect");
+                uniqueContinents.forEach(continent => {
+                    let option = document.createElement("option");
+                    option.value = continent;
+                    option.text = continent;
+                    if (selectedContinent && selectedContinent.toLowerCase() === continent.toLowerCase()) option.selected = true;
+                    continentSelect.appendChild(option);
+                });
 
                 let countrySelect = document.getElementById("countrySelect");
                 uniqueCountries.forEach(country => {
@@ -160,12 +182,8 @@
                     clubSelect.appendChild(option);
                 });
 
-                if (selectedCountry) {
-                    document.getElementById("clubSelect").style.display = "none";
-                } else if (selectedClub) {
-                    document.getElementById("countrySelect").style.display = "none";
-                }
-
+                // FIX: Removed the code that was hiding the other dropdowns so they always stay visible!
+                
                 document.getElementById("navControls").style.display = "flex";
             }
 
@@ -235,8 +253,8 @@
                 { targets: [8], visible: selectedCountry ? false : true, searchable: true }
             ];
 
-            // Fix 1: If it's a country hub, find the Continent column and inject visibility hidden
-            if (selectedCountry && continentColIdx !== -1) {
+            // Hide continent column if searching by country or continent
+            if ((selectedCountry || selectedContinent) && continentColIdx !== -1) {
                 columnDefinitions.push({ targets: [continentColIdx], visible: false, searchable: true });
             }
 
